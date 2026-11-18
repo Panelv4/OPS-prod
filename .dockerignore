@@ -1,0 +1,9 @@
+.git
+node_modules
+.next
+.env*
+*.zip
+*.tsbuildinfo
+backups
+*.dump
+*.log

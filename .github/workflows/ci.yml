@@ -1,0 +1,63 @@
+name: OpsPilot verification
+on: [push, pull_request]
+permissions: {contents: read}
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: opspilot_test
+        ports: ['127.0.0.1:5432:5432']
+        options: --health-cmd pg_isready --health-interval 3s --health-timeout 3s --health-retries 20
+    env:
+      APP_ORIGIN: http://127.0.0.1:3000
+      TEST_BASE_URL: http://127.0.0.1:3000
+      NEXT_TELEMETRY_DISABLED: '1'
+      ENABLE_EXTERNAL_AI: '0'
+      BILLING_MODE: 'off'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22', cache: npm}
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run lint && npm run typecheck && npm run build
+      - name: Provision isolated roles and migrate twice (temporary service only)
+        env:
+          PGHOST: 127.0.0.1
+          PGDATABASE: opspilot_test
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          POSTGRES_PASSWORD: postgres
+        run: |
+          set -euo pipefail
+          export OPSPILOT_MIGRATOR_PASSWORD=$(openssl rand -hex 32) OPSPILOT_RUNTIME_PASSWORD=$(openssl rand -hex 32)
+          vault=$(openssl rand -hex 32)
+          for secret in "$OPSPILOT_MIGRATOR_PASSWORD" "$OPSPILOT_RUNTIME_PASSWORD" "$vault"; do printf '::add-mask::%s\n' "$secret"; done
+          psql -Xq -v ON_ERROR_STOP=1 -f scripts/postgres/init-roles.sql
+          unset PGUSER PGPASSWORD POSTGRES_PASSWORD
+          export DATABASE_URL="postgresql://opspilot_migrator:$OPSPILOT_MIGRATOR_PASSWORD@127.0.0.1:5432/opspilot_test"
+          npm run db:migrate -- --grant-runtime
+          npm run db:migrate -- --grant-runtime
+          printf 'DATABASE_URL=postgresql://opspilot_runtime:%s@127.0.0.1:5432/opspilot_test\nOPSPILOT_SECRET_KEY=%s\n' "$OPSPILOT_RUNTIME_PASSWORD" "$vault" >> "$GITHUB_ENV"
+      - name: Verify server and worker as the restricted runtime role
+        run: |
+          node tests/ops-rehearsal.mjs acl
+          npm run start -- -H 127.0.0.1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || :' EXIT
+          curl --silent --fail --retry 15 --retry-connrefused --retry-delay 1 "$TEST_BASE_URL/api/health"
+          npm test
+          CHROMIUM_PATH=$(command -v google-chrome) npm run test:browser
+          npm run worker -- --once
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rehearse the packaged stack (disposable, billing off)
+        run: bash scripts/rehearse-compose.sh

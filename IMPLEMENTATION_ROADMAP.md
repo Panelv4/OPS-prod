@@ -1,0 +1,18 @@
+# Implementation sequence and stop conditions
+
+Two founders; dependency order rather than speculative release dates. A = engineering/infra, B = product/operations. Completed work and open items are in [TASKS.md](TASKS.md); only [release evidence](PRODUCTION_READINESS.md) can move a gate. Proposed paid launch is not authorized by this document.
+
+| Gate | Owner / dependency | Exit evidence / stop condition |
+|---|---|---|
+| 0 · know the archive | A · done locally | ZIP preserved, original baseline independent of revised assertions, inventory and findings with traceable fixes |
+| 1 · safe local workflow | A · done for documented fixtures | Native production build + PG16 + SMTP sink + worker restart + replay/role tests; Chromium first-run. Stop if any tenant/finance regression, exposed token, false demo or fallback key appears |
+| 2 · package and operate | A/B · before any customer data | Docker-enabled runner builds/prunes image and Compose rehearsal incl mail catch/worker persists across restart; least-privilege staging DSN, reverse proxy/TLS and log scrubbing reviewed. Native split-role SMTP/restore and the Docker rehearsal passed on `425a1b3`; actual managed staging, ingress and monitoring remain open. Address/approve tooling advisory risk, profile large lists with synthetic tenants |
+| 3 · real sender + sandbox gateway | A + merchant owner · credential/configuration gated | Approved test sender, bounce/expiry/retry; real **test-only** hosted checkout/customer portal, signed renew/decline/change/refund/dispute/cancel + mismatch/replay evidence against provider dashboard. Independent reconciling history job + cutoff/grace/downgrade tests. Never charge or silently enable live |
+| 4 · privacy and recovery | B/counsel + A · after vendor selection | Data mapping, DSAR export/purge rehearse multi-membership/holds and immutable audit, reviewed privacy/DPA/cookies/payments, offsite encrypted backup/PITR + key escrow and return drill, monitoring alerts and response tabletop. Verify RTO/RPO on representative volume |
+| 5 · focused pilot | B + consenting agencies · after release signoff | Start synthetic-only discovery now if founders authorize contact. Real-data pilot only after gates 2–4 and independent review. Log 10 interviews, repeat pain, two repeat users, activation/time-to-value and week-two retention; report actual denominators, not goals as results |
+| 6 · paid monthly / controlled launch | both founders + human legal/financial owner | Explicit decision to introduce a separately reviewed live provider/account/mode; verify business eligibility, tax/FX, fees, price list, receipts, dunning, chargeback/export/retention. No launch if support burden exceeds budget or buyers do not value workflow |
+| Later · demand-led | B selects one problem; A tests smallest change | Validate accounting export vs client status view vs cost-rate allocation with three independent teams. Defer two-way integrations, multi-currency books, arbitrary cron, object storage, OCR, referrals and annual prepay until proven need/cost and approvals |
+
+### Acceptance checklist for an agency pilot
+
+Verified owner selects a fixed currency and explicit tax default; gets one customer in without retyping; sets a project budget/deadline; teammate logs work; invoice is linked to that client/project; a recorded payment reduces open balance and posted project expense affects recorded cash; restricted teammate doesn't see privileged figures. Ask what must happen in their accounting system after this, what wasn't safe to enter, and whether they'd do the next engagement unaided. Don't treat planned budget − spend or cash balance as job profitability.

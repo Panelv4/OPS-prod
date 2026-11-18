@@ -1,0 +1,64 @@
+# Development only. A new private PG volume runs the role bootstrap exactly once.
+x-image: &image
+  image: ${COMPOSE_PROJECT_NAME:-opspilot}-runtime
+  build: .
+  pull_policy: never
+x-runtime: &runtime
+  <<: *image
+  environment:
+    DATABASE_URL: postgresql://opspilot_runtime:${OPSPILOT_RUNTIME_PASSWORD:?Set a random hex runtime password}@postgres:5432/${OPSPILOT_DB_NAME:-opspilot}
+    OPSPILOT_SECRET_KEY: ${OPSPILOT_SECRET_KEY:?Generate with openssl rand -hex 32}
+    APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+    SMTP_HOST: mailpit
+    SMTP_PORT: '1025'
+    SMTP_LOCAL_SINK: '1'
+    SMTP_FROM: noreply@opspilot.test
+    ENABLE_EXTERNAL_AI: '0'
+    BILLING_MODE: 'off'
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: opspilot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a separate bootstrap password}
+      POSTGRES_DB: ${OPSPILOT_DB_NAME:-opspilot}
+      OPSPILOT_MIGRATOR_PASSWORD: ${OPSPILOT_MIGRATOR_PASSWORD:?Set a random hex migrator password}
+      OPSPILOT_RUNTIME_PASSWORD: ${OPSPILOT_RUNTIME_PASSWORD:?Set a random hex runtime password}
+    volumes:
+      - opspilot_pgdata:/var/lib/postgresql/data
+      - ./scripts/postgres/init-roles.sql:/docker-entrypoint-initdb.d/10-opspilot-roles.sql:ro
+    healthcheck:
+      # TCP becomes available only after the temporary init server has finished.
+      test: [CMD-SHELL, 'pg_isready -q -h 127.0.0.1 -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mailpit:
+    image: axllent/mailpit:v1.27.8
+    ports: ['127.0.0.1:${LOCAL_MAIL_PORT:-8025}:8025']
+  migrate:
+    <<: *image
+    environment:
+      DATABASE_URL: postgresql://opspilot_migrator:${OPSPILOT_MIGRATOR_PASSWORD:?Set a random hex migrator password}@postgres:5432/${OPSPILOT_DB_NAME:-opspilot}
+    command: [npm, run, 'db:migrate', '--', '--grant-runtime']
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck: {disable: true}
+  app:
+    <<: *runtime
+    restart: unless-stopped
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    ports: ['127.0.0.1:${LOCAL_APP_PORT:-3000}:3000']
+  worker:
+    <<: *runtime
+    restart: unless-stopped
+    command: [node, '--import', tsx, scripts/worker.ts]
+    stop_grace_period: 30s
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      mailpit: {condition: service_healthy}
+    healthcheck: {disable: true}
+volumes:
+  opspilot_pgdata:

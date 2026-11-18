@@ -1,0 +1,6 @@
+[
+  {"id":"community","name":"Free","usdCents":0,"tagline":"Try the client-to-invoice workflow.","maxUsers":5,"maxWorkflows":5,"aiTokenLimit":50000,"storageMiB":50},
+  {"id":"starter","name":"Starter","usdCents":2900,"tagline":"For a small delivery team.","maxUsers":10,"maxWorkflows":15,"aiTokenLimit":150000,"storageMiB":250},
+  {"id":"pro","name":"Growth","usdCents":5900,"tagline":"For agencies running several engagements.","maxUsers":20,"maxWorkflows":50,"aiTokenLimit":500000,"storageMiB":750},
+  {"id":"business","name":"Scale","usdCents":11900,"tagline":"For a larger client-services workspace.","maxUsers":30,"maxWorkflows":100,"aiTokenLimit":1000000,"storageMiB":1500}
+]
