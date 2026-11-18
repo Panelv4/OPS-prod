@@ -1,0 +1,1 @@
+ALTER TABLE "tenants" ADD COLUMN "last_sweep_date" text;

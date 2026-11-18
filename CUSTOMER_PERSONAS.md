@@ -1,0 +1,12 @@
+# Interview profiles, not fictional customer endorsements
+
+**Beachhead:** founder-led 8–20-person web/design-development agency running several fixed-fee client engagements. Include adjacent 5–30-person digital marketing, software and creative services teams only if the same handoff is painful. These are recruiting hypotheses. No actual buyer interviews or permissions to contact are asserted.
+
+| Person / authority | Moment of need | Ask about the last occurrence | What would disprove fit? |
+|---|---|---|---|
+| Agency founder / managing partner (economic buyer) | Friday cash review: delivered work, unbilled stage, open balance and who owns next action are in different places | “Walk me through one completed milestone. Who decided it could be invoiced? How did you know it was paid?” Ask for elapsed handoffs and existing spend in their words | One person does it in minutes with no errors; buyer will not switch or approve a separate operations view |
+| Delivery lead / producer (champion) | Budget/deadline changes but status and time aren't reflected in the billing conversation | “Last time scope changed, what did you update first? Which update was copied by someone else?” | Needs advanced capacity planning, dependencies or a client approval portal before trying any workflow |
+| Bookkeeper / finance operations (veto, reconciliation) | Invoice and recorded cash must match the accounting system; can't expose salary data to the team | “Which export, identifiers, currency or approval do you need before accepting an entry?” Do not ask for balances or an actual payroll file | Requires certified general ledger, full statutory filing, auto-debit, or an unsupported jurisdiction/integration |
+| Contributor / designer / developer (adoption) | Can log 30 minutes and hand off a deliverable without handling financial records | “Show how you tell the PM you're done. What makes a time entry too much effort?” | Daily time entry is prohibited, or all project names themselves must be isolated per contractor |
+
+Recruit by business context and voluntary introductions, not personal data. Qualify: team size band, service/pricing model, buyer involvement, repeatable delivery and billing handoff, current tool stack, data sensitivity, willingness to test with fictional data. Exclude regulated payroll/health workloads and firms needing external client logins. Success means a teammate completes the flow without founder hand-holding a second time, not a positive demo reaction.

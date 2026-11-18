@@ -1,0 +1,20 @@
+# Pricing hypotheses and settlement policy
+
+**Not an offer to charge.** `src/lib/plans.json` is the single operator-owned catalog; plan IDs are stable for compatibility. Monthly workspace pricing needs testing with actual buyers, separate from agency invoices they issue to clients.
+
+| Proposed monthly USD | Seats (memberships) | Saved workflows | Version payload MiB | AI usage units / UTC month |
+|---|---:|---:|---:|---:|
+| Free $0 (`community`) | 5 | 5 | 50 | 50,000 |
+| Starter $29 (`starter`) | 10 | 15 | 250 | 150,000 |
+| Growth $59 (`pro`) | 20 | 50 | 750 | 500,000 |
+| Scale $119 (`business`) | 30 | 100 | 1,500 | 1,000,000 |
+
+A Growth hypothesis at 10 users is $5.90 per seat-equivalent, **not** a per-seat charge. Compare with actual required packages (seat minimum, monthly vs annual and taxes), not cherry-picked labels. Zoho's all-employee licensing [1](https://www.zoho.com/one/pricing/faq.html), ERPNext hosting + services [1](https://frappe.io/erpnext/pricing) and Scoro's modular five-seat minimum [1](https://www.scoro.com/pricing/) are three different cost models. See [competitor notes](COMPETITOR_ANALYSIS.md). A $59 aspiration may be too expensive vs an adequate spreadsheet or far too low for founder support time; neither is validated.
+
+**Limits / changes:** workspace lock on accepted seats, configured workflows and file version payload bytes. Pending invite is not a guaranteed reserved seat; recheck at acceptance. Suspended membership still counts. Monthly estimated AI units are a quota, not a claim of exact model tokens or vendor spend. Usage and test invoice history are owner-only. Read existing records after downgrade; reject new over-limit resources, no forced deletion or surprise overage bill. Existing workflows are not automatically deleted on downgrade. No unverified grace credit: keep a confirmed paid term only while conditions permit; failed/unsupported settlement falls back to Free, and expiry is checked on access. Cancel-at-period-end keeps the verified paid-through date; immediate cancellation is distinct. Review grace/dunning and non-destructive downgrade policy with buyers before live enablement. Product unit tests are not gateway acceptance.
+
+**Provider choice:** retain Stripe test adapter for USD monthly experimentation; separate test credentials, portal and signing secrets. Stripe states Indian merchant onboarding is invite-only [1](https://support.stripe.com/questions/india-faq). Razorpay documents card subscriptions, INR-only UPI/eMandate with eligibility/limits, and international cards with settlement rules [1](https://razorpay.com/docs/payments/subscriptions/faqs). Indian UPI AutoPay is a mandate flow, not a synchronous client “success” [1](https://docs.stripe.com/payments/upi/accept-a-payment). For the Indian entity, verify eligibility, supported recurring methods, fees/FX, settlement delay, refund/dispute APIs, documentation/exports and tax duties. Consider implementing Razorpay next **only** if a suitable eligible account and recurring INR demand are confirmed. Never open an account or handle live funds as part of code testing.
+
+**Interview protocol:** learn current tools/spend before showing prices. Ask “Which budget owner would approve $59/workspace/month for this exact workflow? What would you stop paying for? What makes it a no?” Show the same scope at the proposed tier; record accept/decline/reason, seat and currency requirement, no invented conversions. A stated preference < a volunteered repeat pilot < a verified settled renewal. Track each separately.
+
+**Roadmap not included:** possible 15–20% annual discount only after monthly renewal/cancel/refund reliability and retention (Growth annual equivalent $566.40–601.80/year). No annual checkout now. Separate optional paid onboarding/services and storage/AI add-ons from core subscriptions; no ad hoc price edits from tenant UI, no support/enterprise SLA, paid referral or unlimited entitlement. Quote local currency/tax only after tax/FX and payment review; workspace operating currency is not gateway billing currency.

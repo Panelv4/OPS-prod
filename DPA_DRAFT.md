@@ -1,0 +1,28 @@
+# Proposed data-processing schedule and commercial review checklist
+
+**Discussion draft only. Not effective terms, not an offer, not signed.** Counsel must identify parties, governing law, order of precedence, start/end date, instructions, legal notice contacts, limits of liability and applicable supervisory authority before presenting a contract. Founders must approve all obligations and any subprocessor appointments.
+
+### Schedule A · processing instructions
+
+- Customer: proposed controller of agency workspace records; operator: proposed processor for hosting and operating those records. Subject matter: agency project delivery, CRM, optionally finance/HR/files and approved automation. Duration: approved service term and documented return/deletion period. People: customer personnel, contacts, suppliers, clients and named task participants. Data categories and minimized purposes: [privacy table](PRIVACY_AND_DATA.md). Account relationship, abuse/security and own billing purposes may have separate controller roles.
+- Process workspace content only on documented instructions (including transfers); flag instructions believed unlawful, route direct rights requests to customer unless obliged otherwise. Limit people with access, confidentiality commitments, access reviews, least privilege, traceable support access. Human founder approval before accessing any actual customer record; never use customer material in demos/model training.
+- Assist with access, rectification, export, deletion/holds, security risk assessments, impact assessments and incident notification consistent with role and applicable law. Agree service levels and evidence format; do not promise audited certifications, universal localization, MFA/SSO, 24/7 support or restore-time guarantees not delivered.
+- Maintain technical/organizational annex: application gates, tenant FKs, session/recovery controls, encrypted mail/BYO keys, no live card data, log restrictions; add **actual** provider at-rest/TLS, encryption/backup custody, staff controls, DR results and monitoring after verification. Share reasonable evidence under confidentiality and a scoped audit process, not unrestricted access to other tenants.
+- Notify controller without undue delay on becoming aware of a relevant personal-data breach; agree factual contents (nature, approximate scope where known, contact, consequences, mitigation), update as facts become known, preserve records. Controller assesses its own duties. EU Articles 28/32–34 and Chapter V are review points, not universal claims. [1](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng)
+- At termination, return/delete per customer choice unless lawful retention required; cover files, historical versions, queues, derived data, verified recipient, backup cycling and reapplication on recovery. Provide completion record with exceptions, not untested erasure guarantees. Agree change notice, objection/substitution and flow-down obligations for approved subprocessors.
+
+### Schedule B · proposed vendors, not a list of contracted subprocessors
+
+| Candidate / role | Data path | Before approval |
+|---|---|---|
+| Render or selected hosting/managed PG | Tenant records, backups, service-level operational metadata | Choose region, identify legal entity/support countries and subprocessors, confirm encryption/retention/PITR, sign appropriate terms, restrict network and staff |
+| Transactional SMTP (e.g., SES) | Recipient + one-use code/notification content | Verify sender/domain, region and retention, bounce/abuse handling, DPA and suppression list; no marketing reuse |
+| Stripe (test only; Razorpay evaluated, not integrated) | Customer/charge/subscription identifiers and hosted payment details | Distinguish independent controller/processor activities, merchant terms, refund/dispute/tax responsibilities, regions and transfer safeguards; no live account |
+| OpenAI (optional owner-enabled general help) | Only user-entered `help:` text and API authentication; no DB context | Review contract, data use/retention, regions, model allowlist and workspace disclosure; disable if unsupported. No scan/document OCR |
+| Monitoring / separate encrypted backup store (unselected) | Minimized errors/uptime or encrypted DB copies | No request-body capture; DPA, recovery/access policy and deletion timetable. No vendor installed by listing it here |
+
+Map storage, support and onward access across borders; choose lawful mechanism (adequacy or appropriate safeguards, e.g. SCCs plus transfer assessment/UK mechanism when required) with counsel; publish approved list and change process. No promise that all data stays in one country. EU transfer requirements are context-dependent. [1](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng)
+
+### Separate SaaS/payment terms for review, not binding commercial terms
+
+Define service scope/exclusions, authorized users, acceptable uploads/rights, account security, support/availability, no professional tax/payroll/legal advice, customer data ownership vs limited service license, suspension/termination, return of data, governing law and dispute process. Proposed monthly fees, seat/resource caps, billing currency, taxes, renewal, cancellation effective date, grace/failed-payment treatment, refund eligibility and redress must match **verified** gateway behavior, consumer/business laws and local invoices. Never state “no refunds” globally. Do not charge for OCR, client portal, third-party integrations or any incomplete feature. No account signup, legal entity selection, tax registration, contract acceptance or agreement with any vendor has been performed by the agent.

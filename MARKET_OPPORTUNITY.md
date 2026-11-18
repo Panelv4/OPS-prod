@@ -1,0 +1,17 @@
+# Market choice for two founders
+
+**Recommendation: India first for discovery; UK second, not simultaneous launch.** An India-based founder can test introductions and local support hours before paying to acquire traffic. UK English-language discovery is a reasonable second experiment with partial time-zone overlap. This is an operating choice, not a claim that Indian buyers will pay $59 or UK buyers will pay more. No validated TAM, conversion rate, signed customer or payment exists here.
+
+| Market | Observable discovery signal | Hypothesis to test / reason for priority |
+|---|---|---|
+| India · primary | Public directories show web/design firms in 10–49 bands in Mumbai; “serves” is not the same as based there. [1](https://clutch.co/in/web-designers/mumbai) | Recruit locally or by introduction; test INR budgets, GST/accountant workflow, card vs UPI mandate preference, English-language onboarding. Merchant eligibility matters; do not assume Stripe onboarding. [1](https://support.stripe.com/questions/india-faq) |
+| UK · secondary | London design + development agencies appear in this band. [2](https://clutch.co/web-designers/ecommerce-industry/uk?page=2) | Test GBP customer invoices, Xero dependence, processor agreement/transfer requirements and affordable workspace terms. No UK tax-compliance claim |
+| US · defer | US-located agencies appear alongside foreign service providers in listings. [2](https://clutch.co/us/web-designers/information-technology-industry?page=6) | Large-looking directories aren't a reachable market. Test timezone/support fit and QuickBooks requirement only if warm introductions arrive |
+| Canada · defer | Examples in Toronto and Vancouver. [1](https://clutch.co/web-designers/small-business) | CAD records supported; multi-province tax/consent needs and founder-hours overlap require validation. Don't bundle with US research by default |
+| Australia · defer | Melbourne listings include local 10–49-person agencies. [1](https://clutch.co/au/web-designers/melbourne) | AUD records supported; ask whether local books, BAS and residency are nonnegotiable. Favor introductions after primary experiment; no AU payroll model |
+
+Directory headcount bands are wider than the ICP and often self-reported. They are examples of where firms are discoverable, not a census, proof of pain, mailing list or permission to contact. Don't scrape records.
+
+**Bottom-up planning:** ₹100,000 / ₹87 ≈ **$1,149.43 MRR**. At $59 per workspace per month, the minimum whole number to reach the target is **20 paying workspaces** ($1,180 or ₹102,660). At $29 only, 40 would generate $1,160; at $119 only, 10 would generate $1,190. These are price/quantity identities before fees/tax/churn, not a forecast; ₹87 is the supplied planning rate, not spot FX.
+
+**Decision experiment:** seek 10 opt-in conversations in the primary segment; use the last actual project, a neutral task and a concrete hypothetical monthly price. Record current workaround, who pays, what would prevent switching, and which single feature was mandatory. Move to a small synthetic-data pilot if at least three unrelated teams describe the same handoff *and* two volunteer to try it again with a teammate. Move to UK discovery if channels/price/payment method in India block tests, or after primary retention is evidenced. If pain isn't repeatable, narrow the segment or stop; do not expand to five countries to hide a weak signal.
